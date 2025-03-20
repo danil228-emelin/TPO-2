@@ -29,6 +29,8 @@ import java.math.RoundingMode;
  */
 @Slf4j
 public class FunctionsSystem implements SeriesExpandableFunction {
+    // default value in case of arithmetics error such as division by zero.
+    private final BigDecimal DEFAULT_VALUE=BigDecimal.valueOf(Integer.MAX_VALUE);
 
     private final Sin sin;
     private final Tan tan;
@@ -38,7 +40,6 @@ public class FunctionsSystem implements SeriesExpandableFunction {
     private final Log log3;
     private final Log log5;
     private final Log log10;
-
 
     public FunctionsSystem() {
         this.sin = new Sin();
@@ -79,12 +80,12 @@ public class FunctionsSystem implements SeriesExpandableFunction {
 
             if (sinX.compareTo(ZERO) == 0) {
                 log.warn("cotX and cscX are undefined because sinX = 0 at x = {}", x);
-                return BigDecimal.valueOf(Integer.MAX_VALUE);
+                return DEFAULT_VALUE;
             }
 
             if (cosX.compareTo(ZERO) == 0) {
                 log.warn("secX is undefined because cosX = 0 at x = {}", x);
-                return  BigDecimal.valueOf(Integer.MAX_VALUE);
+                return DEFAULT_VALUE;
             }
 
             BigDecimal cotX = cosX.divide(sinX, RoundingMode.HALF_DOWN);
@@ -95,11 +96,12 @@ public class FunctionsSystem implements SeriesExpandableFunction {
             BigDecimal term2 = sinX.subtract(cosX);
             BigDecimal term3 = cotX.add(cosX.subtract(cosX));
             BigDecimal term4 = cscX.subtract(secX).add(secX);
+
             BigDecimal term5 = term3.divide(term4, mc);
             BigDecimal result = term1.add(term2).subtract(term5).subtract(sinX).setScale(precision.scale(), HALF_EVEN);
-
             log.debug("Result for x <= 0: {}", result);
             return result;
+
         } else {
             BigDecimal log5X = log5.calculate(correctedX, precision);
             BigDecimal log10X = log10.calculate(correctedX, precision);
@@ -110,8 +112,16 @@ public class FunctionsSystem implements SeriesExpandableFunction {
             log.debug("log5X: {}, log10X: {}, lnX: {}, log3X: {}, log2X: {}", log5X, log10X, lnX, log3X, log2X);
 
             BigDecimal term1 = log5X.subtract(log10X).subtract(lnX);
-            BigDecimal term2 = term1.divide(log10X, mc).divide(log3X, mc);
-            BigDecimal term3 = log2X.subtract(log10X).subtract(lnX);
+            BigDecimal term2;
+            BigDecimal term3;
+
+            try {
+                term2 = term1.divide(log10X, mc).divide(log3X, mc);
+                term3 = log2X.subtract(log10X).subtract(lnX);
+            } catch (ArithmeticException e) {
+                log.warn("Division for term2 failed with log3X: {}. Error: {}", log3X, e.getMessage());
+                return DEFAULT_VALUE;
+            }
 
             BigDecimal result = term2.subtract(term3).setScale(precision.scale(), HALF_EVEN);
             log.debug("Result for x > 0: {}", result);
