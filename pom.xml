@@ -26,7 +26,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -39,6 +38,18 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>4.0.0</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version><!-- Use the latest stable version -->
+        </dependency>
+
+        <!-- Logback Classic (a logging implementation for SLF4J) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.6</version><!-- Use the latest stable version -->
         </dependency>
         <dependency>
             <groupId>ch.obermuhlner</groupId>
