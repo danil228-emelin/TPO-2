@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.logarithmic.Ln;
 import org.example.logarithmic.Log;
 import org.example.trigonometric.Cos;
+import org.example.trigonometric.Cot;
 import org.example.trigonometric.Sin;
 import org.example.trigonometric.Tan;
 
@@ -87,8 +88,8 @@ public class FunctionsSystem implements SeriesExpandableFunction {
                 log.warn("secX is undefined because cosX = 0 at x = {}", x);
                 return DEFAULT_VALUE;
             }
-
-            BigDecimal cotX = cosX.divide(sinX, RoundingMode.HALF_DOWN);
+            Cot cot = new Cot(cos,sin);
+            BigDecimal cotX = cot.calculate(correctedX,precision);
             BigDecimal cscX = sin.calculateCsc(correctedX, precision);
             BigDecimal secX = cos.calculateSec(correctedX,precision);
 
