@@ -3,6 +3,9 @@ package org.example.trigonometric;
 import lombok.extern.slf4j.Slf4j;
 import org.example.function.LimitedIterationsExpandableFunction;
 
+import static java.math.BigDecimal.ONE;
+import static java.math.BigDecimal.ZERO;
+import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
 
 import java.math.BigDecimal;
@@ -103,4 +106,37 @@ public class Sin extends LimitedIterationsExpandableFunction {
 
         return accum;
     }
+
+    /**
+     * Calculates the cosecant of a given angle in radians.
+     * <p>
+     * This method computes the sine of the input angle and then
+     * returns the reciprocal of that value. It checks for cases where
+     * sin(x) is zero, which leads to an undefined cosecant (division by zero).
+     * </p>
+     *
+     * @param x         The angle in radians for which to compute
+     *                  the cosecant.
+     * @param precision The precision for the calculation, must be
+     *                  strictly greater than zero and less than one.
+     * @return The cosecant of the input angle x, computed to
+     *         the specified precision.
+     * @throws ArithmeticException if the provided parameters are
+     *                              invalid or if cosecant is undefined (sin(x) = 0).
+     */
+    public BigDecimal calculateCsc(final BigDecimal x, final BigDecimal precision)
+            throws ArithmeticException {
+        checkValidity(x, precision);
+
+        final BigDecimal sinValue = calculate(x, precision);
+
+        if (sinValue.compareTo(ZERO) == 0) {
+            throw new ArithmeticException("Cosecant is undefined for angle " + x + " (sin(x) = 0).");
+        }
+
+        return ONE.divide(sinValue, DECIMAL128.getPrecision(), HALF_EVEN)
+                .setScale(precision.scale(), HALF_EVEN);
+    }
+
+
 }

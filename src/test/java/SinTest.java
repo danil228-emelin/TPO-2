@@ -3,6 +3,7 @@ import static java.math.BigDecimal.ZERO;
 import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import java.math.BigDecimal;
@@ -66,5 +67,71 @@ class SinTest {
         final Sin sin = new Sin();
         final BigDecimal expected = new BigDecimal("0.0972");
         assertEquals(expected, sin.calculate(new BigDecimal(-113), DEFAULT_PRECISION));
+    }
+
+    /**
+     * Tests cosecant calculation for zero.
+     * The calculation should throw an ArithmeticException because
+     * csc(0) is undefined (since sin(0) = 0).
+     */
+    @Test
+    void shouldNotCalculateCscForZero() {
+        final Sin sin = new Sin();
+        assertThrows(ArithmeticException.class, () -> sin.calculateCsc(ZERO, DEFAULT_PRECISION));
+    }
+    /**
+     * Tests cosecant calculation for π/6 (30 degrees).
+     * Since sin(π/6) = 0.5, csc(π/6) should be 2.
+     */
+    @Test
+    void shouldCalculateCscForPiDividedBySix() {
+        final Sin sin = new Sin();
+        final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).divide(new BigDecimal(6), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
+        assertEquals(new BigDecimal("2.0000"), sin.calculateCsc(arg, DEFAULT_PRECISION));
+    }
+
+    /**
+     * Tests cosecant calculation for π/2 (90 degrees).
+     * Since sin(π/2) = 1, csc(π/2) should also be 1.
+     */
+    @Test
+    void shouldCalculateCscForPiDividedByTwo() {
+        final Sin sin = new Sin();
+        final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).divide(new BigDecimal(2), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
+        assertEquals(ONE.setScale(DEFAULT_PRECISION.scale(), HALF_EVEN), sin.calculate(arg, DEFAULT_PRECISION));
+    }
+
+    /**
+     * Tests cosecant calculation for π (180 degrees).
+     * The calculation should throw an ArithmeticException because
+     * csc(π) is undefined (since sin(π) = 0).
+     */
+    @Test
+    void shouldNotCalculateCscForPi() {
+        final Sin sin = new Sin();
+        final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128);
+        assertThrows(ArithmeticException.class, () -> sin.calculateCsc(arg, DEFAULT_PRECISION));
+    }
+
+    /**
+     * Tests cosecant calculation for 3π/2 (270 degrees).
+     * Since sin(3π/2) = -1, csc(3π/2) should be -1.
+     */
+    @Test
+    void shouldCalculateCscForThreePiDividedByTwo() {
+        final Sin sin = new Sin();
+        final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).multiply(new BigDecimal(3)).divide(new BigDecimal(2), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
+        assertEquals(new BigDecimal("-1.0000"), sin.calculateCsc(arg, DEFAULT_PRECISION));
+    }
+
+    /**
+     * Tests periodicity of the cosecant function.
+     * Since csc(x) is periodic with a period of 2π, csc(3π) should equal csc(π).
+     */
+    @Test
+    void shouldCalculateCscForPeriodicValue() {
+        final Sin sin = new Sin();
+        final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).multiply(new BigDecimal(3)); // 3π
+        assertThrows(ArithmeticException.class, () -> sin.calculateCsc(arg, DEFAULT_PRECISION));
     }
 }

@@ -89,7 +89,7 @@ public class FunctionsSystem implements SeriesExpandableFunction {
             }
 
             BigDecimal cotX = cosX.divide(sinX, RoundingMode.HALF_DOWN);
-            BigDecimal cscX = ONE.divide(sinX, RoundingMode.HALF_DOWN);
+            BigDecimal cscX = sin.calculateCsc(correctedX, precision);
             BigDecimal secX = cos.calculateSec(correctedX,precision);
 
             BigDecimal term1 = tanX.divide(cotX, mc).divide(sinX, mc);

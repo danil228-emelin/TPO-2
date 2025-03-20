@@ -88,7 +88,23 @@ public class Cos extends LimitedIterationsExpandableFunction {
         log.info("Calculated cosine of {}: {}", x, result);
         return result.setScale(precision.scale(), HALF_EVEN);
     }
-
+    /**
+     * Calculates the secant of a given angle in radians.
+     * <p>
+     * This method computes the cosine of the input angle and then
+     * returns the reciprocal of that value. It checks for cases where
+     * cos(x) is zero, which leads to an undefined secant (division by zero).
+     * </p>
+     *
+     * @param x        The angle in radians for which to compute
+     *                 the secant.
+     * @param precision The precision for the calculation, must be
+     *                  strictly greater than zero and less than one.
+     * @return The secant of the input angle x, computed to
+     *         the specified precision.
+     * @throws ArithmeticException if the provided parameters are
+     *                              invalid or if secant is undefined (cos(x) = 0).
+     */
     public BigDecimal calculateSec(final BigDecimal x, final BigDecimal precision)
             throws ArithmeticException {
         checkValidity(x, precision);

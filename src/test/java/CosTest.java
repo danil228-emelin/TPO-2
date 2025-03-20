@@ -3,6 +3,7 @@ import static java.math.BigDecimal.ZERO;
 import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -109,4 +110,48 @@ class CosTest {
         final BigDecimal expected = new BigDecimal("-0.8797");
         assertEquals(expected, cos.calculate(new BigDecimal(-543), DEFAULT_PRECISION));
     }
+
+    /**
+     * Tests secant calculation for zero.
+     * The expected sec(0) = 1 (since cos(0) = 1).
+     */
+    @Test
+    void shouldCalculateSecForZero() {
+        final Cos cos = new Cos();
+        final BigDecimal sec = cos.calculateSec(ZERO, DEFAULT_PRECISION);
+        assertEquals(new BigDecimal("1.0000"), sec);
+    }
+
+    /**
+     * Tests secant calculation for π/3 (60 degrees).
+     * Since cos(π/3) = 0.5, sec(π/3) should be 2.
+     */
+    @Test
+    void shouldCalculateSecForPiDividedByThree() {
+        final Cos cos = new Cos();
+        final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).divide(new BigDecimal(3), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
+        BigDecimal sec = cos.calculateSec(arg, DEFAULT_PRECISION);
+        assertEquals(new BigDecimal("2.0000"), sec);
+    }
+    /**
+     * Tests secant calculation for π/2 (90 degrees), which should be undefined.
+     * The calculation should throw an ArithmeticException due to cos(π/2) = 0.
+     */
+    @Test
+    void shouldNotCalculateSecForPiDividedByTwo() {
+        final Cos cos = new Cos();
+        final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).divide(new BigDecimal(2), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
+        assertThrows(ArithmeticException.class, () -> cos.calculateSec(arg, DEFAULT_PRECISION));
+    }
+    /**
+     * Tests secant calculation for π (180 degrees).
+     * Since cos(π) = -1, sec(π) should be -1.
+     */
+    @Test
+    void shouldCalculateSecForPi() {
+        final Cos cos = new Cos();
+        final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128);
+        assertEquals(new BigDecimal("-1.0000"), cos.calculateSec(arg, DEFAULT_PRECISION));
+    }
+
 }
