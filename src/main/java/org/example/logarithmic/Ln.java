@@ -37,7 +37,6 @@ public class Ln extends LimitedIterationsExpandableFunction {
         BigDecimal curValue = BigDecimal.ZERO, prevValue;
         int i = 1;
 
-        BigDecimal pow = new BigDecimal("0.1").pow(precision.scale());
         if (Math.abs(X - 1) <= 1){
             do {
                 prevValue = curValue;
@@ -49,7 +48,7 @@ public class Ln extends LimitedIterationsExpandableFunction {
                                 .divide(BigDecimal.valueOf(i), precision.scale(), HALF_UP)
                 );
                 i++;
-            } while (pow.compareTo((prevValue.subtract(curValue)).abs()) < 0 && i < maxIterations);
+            } while (new BigDecimal("0.1").pow(precision.scale()).compareTo((prevValue.subtract(curValue)).abs()) < 0 && i < maxIterations);
             return curValue.add(prevValue).divide(BigDecimal.valueOf(2), HALF_EVEN);
         } else {
             do {
@@ -62,7 +61,7 @@ public class Ln extends LimitedIterationsExpandableFunction {
                                 .divide(BigDecimal.valueOf(i), precision.scale(), HALF_UP)
                 );
                 i++;
-            } while (pow.compareTo((prevValue.subtract(curValue)).abs()) < 0 && i < maxIterations);
+            } while (new BigDecimal("0.1").pow(precision.scale()).compareTo((prevValue.subtract(curValue)).abs()) < 0 && i < maxIterations);
 
             curValue = curValue.add(calculate(BigDecimal.valueOf(X - 1), precision));
         }
