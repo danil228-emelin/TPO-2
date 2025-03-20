@@ -78,13 +78,13 @@ public class FunctionsSystem implements SeriesExpandableFunction {
             log.debug("tanX: {}, sinX: {}, cosX: {}", tanX, sinX, cosX);
 
             if (sinX.compareTo(ZERO) == 0) {
-                log.error("cotX and cscX are undefined because sinX = 0 at x = {}", x);
-                throw new ArithmeticException(format("cotX and cscX are undefined, because sinX = 0 where X = %s", x));
+                log.warn("cotX and cscX are undefined because sinX = 0 at x = {}", x);
+                return BigDecimal.valueOf(Integer.MAX_VALUE);
             }
 
             if (cosX.compareTo(ZERO) == 0) {
-                log.error("secX is undefined because cosX = 0 at x = {}", x);
-                throw new ArithmeticException(format("secX is undefined, because cosX = 0 where X = %s", x));
+                log.warn("secX is undefined because cosX = 0 at x = {}", x);
+                return  BigDecimal.valueOf(Integer.MAX_VALUE);
             }
 
             BigDecimal cotX = cosX.divide(sinX, RoundingMode.HALF_DOWN);
