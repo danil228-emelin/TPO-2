@@ -88,4 +88,18 @@ public class Cos extends LimitedIterationsExpandableFunction {
         log.info("Calculated cosine of {}: {}", x, result);
         return result.setScale(precision.scale(), HALF_EVEN);
     }
+
+    public BigDecimal calculateSec(final BigDecimal x, final BigDecimal precision)
+            throws ArithmeticException {
+        checkValidity(x, precision);
+
+        final BigDecimal cosValue = calculate(x, precision);
+
+        if (cosValue.compareTo(ZERO) == 0) {
+            throw new ArithmeticException("Secant is undefined for angle " + x + " (cos(x) = 0).");
+        }
+
+        return ONE.divide(cosValue, DECIMAL128.getPrecision(), HALF_EVEN)
+                .setScale(precision.scale(), HALF_EVEN);
+    }
 }
