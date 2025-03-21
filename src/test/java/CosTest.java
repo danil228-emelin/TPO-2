@@ -27,9 +27,9 @@ class CosTest {
     private static final BigDecimal DEFAULT_PRECISION = new BigDecimal("0.0001");
 
     @Mock
-    private Sin mockSin;  // Mock of the Sin class to isolate tests
+    private Sin mockSin;
     @Spy
-    private Sin spySin;   // Spy of the Sin class to track interactions without changing behavior
+    private Sin spySin;
 
     /**
      * Tests that the calculate method of the Cos class calls the calculate method of Sin.
@@ -70,7 +70,7 @@ class CosTest {
      */
     @Test
     void shouldCalculateForZero() {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         assertEquals(ONE, cos.calculate(ZERO, DEFAULT_PRECISION));
     }
 
@@ -80,7 +80,7 @@ class CosTest {
      */
     @Test
     void shouldCalculateForPiDividedByTwo() {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         final MathContext mc = new MathContext(DECIMAL128.getPrecision());
         final BigDecimal arg =
                 BigDecimalMath.pi(mc).divide(new BigDecimal(2), DECIMAL128.getPrecision(), HALF_EVEN);
@@ -94,7 +94,7 @@ class CosTest {
      */
     @Test
     void shouldCalculateForOne() {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         final BigDecimal expected = new BigDecimal("0.5403");
         assertEquals(expected, cos.calculate(ONE, DEFAULT_PRECISION));
     }
@@ -106,7 +106,7 @@ class CosTest {
      */
     @Test
     void shouldCalculateForPeriodic() {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         final BigDecimal expected = new BigDecimal("-0.8797");
         assertEquals(expected, cos.calculate(new BigDecimal(-543), DEFAULT_PRECISION));
     }
@@ -117,7 +117,7 @@ class CosTest {
      */
     @Test
     void shouldCalculateSecForZero() {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         final BigDecimal sec = cos.calculateSec(ZERO, DEFAULT_PRECISION);
         assertEquals(new BigDecimal("1.0000"), sec);
     }
@@ -128,7 +128,7 @@ class CosTest {
      */
     @Test
     void shouldCalculateSecForPiDividedByThree() {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).divide(new BigDecimal(3), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
         BigDecimal sec = cos.calculateSec(arg, DEFAULT_PRECISION);
         assertEquals(new BigDecimal("2.0000"), sec);
@@ -139,7 +139,7 @@ class CosTest {
      */
     @Test
     void shouldNotCalculateSecForPiDividedByTwo() {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).divide(new BigDecimal(2), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
         assertThrows(ArithmeticException.class, () -> cos.calculateSec(arg, DEFAULT_PRECISION));
     }
@@ -149,7 +149,7 @@ class CosTest {
      */
     @Test
     void shouldCalculateSecForPi() {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128);
         assertEquals(new BigDecimal("-1.0000"), cos.calculateSec(arg, DEFAULT_PRECISION));
     }

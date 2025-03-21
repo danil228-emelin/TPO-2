@@ -13,9 +13,6 @@ import java.util.Objects;
  */
 public abstract class LimitedIterationsExpandableFunction implements SeriesExpandableFunction {
 
-    /**
-     * Default maximum number of iterations for calculations.
-     */
     private static final int DEFAULT_MAX_ITERATIONS = 1000;
 
     /**
@@ -23,10 +20,7 @@ public abstract class LimitedIterationsExpandableFunction implements SeriesExpan
      */
     protected final int maxIterations;
 
-    /**
-     * Constructs a LimitedIterationsExpandableFunction with the default
-     * maximum iterations set to {@link #DEFAULT_MAX_ITERATIONS}.
-     */
+
     protected LimitedIterationsExpandableFunction() {
         this.maxIterations = DEFAULT_MAX_ITERATIONS;
     }

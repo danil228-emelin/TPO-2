@@ -20,12 +20,12 @@ import java.util.Objects;
  */
 @Slf4j
 public class Ln extends LimitedIterationsExpandableFunction {
+    private final static Ln LN_INSTANCE = new Ln();
 
-    /**
-     * Constructs a new instance of the Ln class with the default maximum
-     * number of iterations.
-     */
-    public Ln() {
+    public static Ln getInstance() {
+        return LN_INSTANCE;
+    }
+    private Ln() {
         super();
     }
 

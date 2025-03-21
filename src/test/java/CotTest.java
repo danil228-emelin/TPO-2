@@ -33,11 +33,11 @@ class CotTest {
     private static final BigDecimal DEFAULT_PRECISION = new BigDecimal("0.0001");
 
     @Mock
-    private Sin mockSin; // Mocked Sin instance for testing
+    private Sin mockSin;
     @Mock
-    private Cos mockCos; // Mocked Cos instance for testing
+    private Cos mockCos;
     @Spy
-    private Sin spySin; // Spied Sin instance to track interactions
+    private Sin spySin;
 
     /**
      * Tests that the calculate method of the Cot class calls the

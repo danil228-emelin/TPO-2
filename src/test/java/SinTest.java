@@ -27,7 +27,7 @@ class SinTest {
      */
     @Test
     void shouldCalculateForZero() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         assertEquals(ZERO.setScale(4, HALF_EVEN), sin.calculate(ZERO, DEFAULT_PRECISION));
     }
 
@@ -37,7 +37,7 @@ class SinTest {
      */
     @Test
     void shouldCalculateForPiDividedByTwo() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         final MathContext mc = new MathContext(DECIMAL128.getPrecision());
         final BigDecimal arg =
                 BigDecimalMath.pi(mc).divide(new BigDecimal(2), DECIMAL128.getPrecision(), HALF_EVEN);
@@ -51,7 +51,7 @@ class SinTest {
      */
     @Test
     void shouldCalculateForOne() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         final BigDecimal expected = new BigDecimal("0.8415");
         assertEquals(expected, sin.calculate(ONE, DEFAULT_PRECISION));
     }
@@ -64,7 +64,7 @@ class SinTest {
      */
     @Test
     void shouldCalculateForPeriodic() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         final BigDecimal expected = new BigDecimal("0.0972");
         assertEquals(expected, sin.calculate(new BigDecimal(-113), DEFAULT_PRECISION));
     }
@@ -76,7 +76,7 @@ class SinTest {
      */
     @Test
     void shouldNotCalculateCscForZero() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         assertThrows(ArithmeticException.class, () -> sin.calculateCsc(ZERO, DEFAULT_PRECISION));
     }
     /**
@@ -85,7 +85,7 @@ class SinTest {
      */
     @Test
     void shouldCalculateCscForPiDividedBySix() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).divide(new BigDecimal(6), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
         assertEquals(new BigDecimal("2.0000"), sin.calculateCsc(arg, DEFAULT_PRECISION));
     }
@@ -96,7 +96,7 @@ class SinTest {
      */
     @Test
     void shouldCalculateCscForPiDividedByTwo() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).divide(new BigDecimal(2), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
         assertEquals(ONE.setScale(DEFAULT_PRECISION.scale(), HALF_EVEN), sin.calculate(arg, DEFAULT_PRECISION));
     }
@@ -108,7 +108,7 @@ class SinTest {
      */
     @Test
     void shouldNotCalculateCscForPi() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128);
         assertThrows(ArithmeticException.class, () -> sin.calculateCsc(arg, DEFAULT_PRECISION));
     }
@@ -119,7 +119,7 @@ class SinTest {
      */
     @Test
     void shouldCalculateCscForThreePiDividedByTwo() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).multiply(new BigDecimal(3)).divide(new BigDecimal(2), MathContext.DECIMAL128.getPrecision(), HALF_EVEN);
         assertEquals(new BigDecimal("-1.0000"), sin.calculateCsc(arg, DEFAULT_PRECISION));
     }
@@ -130,7 +130,7 @@ class SinTest {
      */
     @Test
     void shouldCalculateCscForPeriodicValue() {
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         final BigDecimal arg = BigDecimalMath.pi(MathContext.DECIMAL128).multiply(new BigDecimal(3)); // 3π
         assertThrows(ArithmeticException.class, () -> sin.calculateCsc(arg, DEFAULT_PRECISION));
     }

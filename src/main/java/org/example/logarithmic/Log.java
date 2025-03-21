@@ -6,9 +6,11 @@ import org.example.function.LimitedIterationsExpandableFunction;
 import static java.lang.String.format;
 import static java.math.BigDecimal.ZERO;
 import static java.math.MathContext.DECIMAL128;
+import static java.math.RoundingMode.FLOOR;
 import static java.math.RoundingMode.HALF_EVEN;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  * This class represents a logarithmic function with a specified base,
@@ -21,33 +23,25 @@ public class Log extends LimitedIterationsExpandableFunction {
 
     private final Ln ln; // Instance of natural logarithm class
     private final int base; // Base of the logarithm
+    private final  static HashMap<Integer, Log> FACTORY_LOG=new HashMap<>();
 
-    /**
-     * Constructs a new instance of the Log class with the specified base for logarithm.
-     * Initializes a natural logarithm calculator.
-     *
-     * @param base The base of the logarithm.
-     */
-    public Log(final int base) {
+    public static Log getLog(Integer base) {
+        if (FACTORY_LOG.containsKey(base)){
+            return FACTORY_LOG.get(base);
+        }else{
+            Log log1 = new Log(base);
+            FACTORY_LOG.put(base, log1);
+            return log1;
+        }
+    }
+
+    private Log(final int base) {
         super();
-        this.ln = new Ln();
+        this.ln = Ln.getInstance();
         this.base = base;
         log.info("Log base {} initialized.", base);
     }
 
-    /**
-     * Constructs a new instance of the Log class with the specified
-     * natural logarithm instance and logarithm base.
-     *
-     * @param ln   An instance of the natural logarithm class.
-     * @param base The base of the logarithm.
-     */
-    public Log(final Ln ln, final int base) {
-        super();
-        this.ln = ln;
-        this.base = base;
-        log.info("Log initialized with provided Ln instance and base {}.", base);
-    }
 
     /**
      * Calculates the logarithm of a given value with a specified base.

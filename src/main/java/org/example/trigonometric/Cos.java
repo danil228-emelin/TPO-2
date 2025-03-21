@@ -22,24 +22,20 @@ import java.math.MathContext;
 public class Cos extends LimitedIterationsExpandableFunction {
 
     private final Sin sin; // Instance of the sine function
+    private final static Cos COS_INSTANCE = new Cos();
 
-    /**
-     * Constructs a new instance of the Cos class. Initializes the
-     * sine function instance used for cosine calculation.
-     */
-    public Cos() {
+
+    public static Cos getCos(){
+        return COS_INSTANCE;
+
+    }
+
+    private Cos() {
         super();
-        this.sin = new Sin();
+        this.sin = Sin.getSin();
         log.info("Cosine function initialized with default Sin instance.");
     }
 
-    /**
-     * Constructs a new instance of the Cos class with a specified
-     * sine function instance.
-     *
-     * @param sin An instance of the Sin class to be used for
-     *            cosine calculations.
-     */
     public Cos(final Sin sin) {
         super();
         this.sin = sin;

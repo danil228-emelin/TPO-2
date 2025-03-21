@@ -25,8 +25,8 @@ public class Cot extends LimitedIterationsExpandableFunction {
 
     public Cot() {
         super();
-        this.cos = new Cos();
-        this.sin = new Sin();
+        this.cos = Cos.getCos();
+        this.sin = Sin.getSin();
     }
 
 

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 public class App {
 
     public static void main(String[] args) throws IOException {
-        final Cos cos = new Cos();
+        final Cos cos = Cos.getCos();
         CsvWriter.write(
                 "./csv/cos.csv",
                 cos,
@@ -22,7 +22,7 @@ public class App {
                 new BigDecimal("0.1"),
                 new BigDecimal("0.0000000001"));
 
-        final Sin sin = new Sin();
+        final Sin sin = Sin.getSin();
         CsvWriter.write(
                 "csv/sin.csv",
                 sin,
@@ -40,7 +40,7 @@ public class App {
                 new BigDecimal("0.1"),
                 new BigDecimal("0.0000000001"));
 
-        final Ln ln = new Ln();
+        final Ln ln = Ln.getInstance();
         CsvWriter.write(
                 "csv/ln.csv",
                 ln,
@@ -49,7 +49,7 @@ public class App {
                 new BigDecimal("0.1"),
                 new BigDecimal("0.0000000001"));
 
-        final Log log3 = new Log(3);
+        final Log log3 = Log.getLog(3);
         CsvWriter.write(
                 "csv/log3.csv",
                 log3,
@@ -58,7 +58,7 @@ public class App {
                 new BigDecimal("0.1"),
                 new BigDecimal("0.00000000001"));
 
-        final Log log5 = new Log(5);
+        final Log log5 =Log.getLog(5);
         CsvWriter.write(
                 "csv/log5.csv",
                 log5,
@@ -67,7 +67,7 @@ public class App {
                 new BigDecimal("0.1"),
                 new BigDecimal("0.00000000001"));
 
-        final Log log10 = new Log(10);
+        final Log log10 = Log.getLog(5);
         CsvWriter.write(
                 "csv/log10.csv",
                 log10,
@@ -76,7 +76,7 @@ public class App {
                 new BigDecimal("0.1"),
                 new BigDecimal("0.00000000001"));
 
-        final FunctionsSystem func = new FunctionsSystem();
+        final FunctionsSystem func = FunctionsSystem.getInstance();
         CsvWriter.write(
                 "csv/func.csv",
                 func,

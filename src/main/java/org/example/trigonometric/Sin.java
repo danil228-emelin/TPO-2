@@ -9,7 +9,6 @@ import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
 /**
  * This class implements the sine function as an extension of
@@ -18,11 +17,12 @@ import java.math.MathContext;
  */
 @Slf4j
 public class Sin extends LimitedIterationsExpandableFunction {
+    private final static Sin SIN_INSTANCE = new Sin();
 
-    /**
-     * Constructs a new instance of the Sin class.
-     */
-    public Sin() {
+    public static Sin getSin(){
+        return SIN_INSTANCE;
+    }
+    private Sin() {
         super();
         log.info("Sine function initialized.");
     }

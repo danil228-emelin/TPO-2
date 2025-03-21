@@ -33,11 +33,11 @@ class TanTest {
     private static final BigDecimal DEFAULT_PRECISION = new BigDecimal("0.0001");
 
     @Mock
-    private Sin mockSin; // Mocked Sin instance for testing
+    private Sin mockSin;
     @Mock
-    private Cos mockCos; // Mocked Cos instance for testing
+    private Cos mockCos;
     @Spy
-    private Sin spySin; // Spied Sin instance to track interactions
+    private Sin spySin;
 
     /**
      * Tests that the calculate method of the Tan class calls the
@@ -85,7 +85,7 @@ class TanTest {
         when(mockSin.calculate(eq(arg), any(BigDecimal.class)))
                 .thenReturn(new BigDecimal("-0.95892427"));
 
-        final Tan tan = new Tan(mockSin, new Cos());
+        final Tan tan = new Tan(mockSin, Cos.getCos());
         final BigDecimal expectedResult = new BigDecimal("-3.3801");
         assertEquals(expectedResult, tan.calculate(arg, DEFAULT_PRECISION));
     }
@@ -101,7 +101,7 @@ class TanTest {
         when(mockCos.calculate(eq(arg), any(BigDecimal.class)))
                 .thenReturn(new BigDecimal("0.28366218"));
 
-        final Tan tan = new Tan(new Sin(), mockCos);
+        final Tan tan = new Tan(Sin.getSin(), mockCos);
         final BigDecimal expectedResult = new BigDecimal("-3.3804");
         assertEquals(expectedResult, tan.calculate(arg, DEFAULT_PRECISION));
     }

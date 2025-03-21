@@ -1,13 +1,8 @@
 package org.example.function;
 
-import static java.lang.String.format;
 import static java.math.BigDecimal.ZERO;
-import static java.math.BigDecimal.ONE;
-
 import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
-import static java.math.RoundingMode.HALF_DOWN;
-
 import ch.obermuhlner.math.big.BigDecimalMath;
 import lombok.extern.slf4j.Slf4j;
 import org.example.logarithmic.Ln;
@@ -19,19 +14,18 @@ import org.example.trigonometric.Tan;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 
 /**
  * A class representing a collection of mathematical functions
- * that can be evaluated as a series, implementing the
- * SeriesExpandableFunction interface. This class provides
+ * implementing the SeriesExpandableFunction interface. This class provides
  * methods to calculate trigonometric and logarithmic functions,
  * and handles specific cases for calculations.
  */
 @Slf4j
 public class FunctionsSystem implements SeriesExpandableFunction {
-    // default value in case of arithmetics error such as division by zero.
+    // default value in case of arithmetic errors such as division by zero.
     private final BigDecimal DEFAULT_VALUE=BigDecimal.valueOf(Integer.MAX_VALUE);
+    private final static FunctionsSystem FUNCTIONS_SYSTEM_INSTANCE = new FunctionsSystem();
 
     private final Sin sin;
     private final Tan tan;
@@ -42,15 +36,19 @@ public class FunctionsSystem implements SeriesExpandableFunction {
     private final Log log5;
     private final Log log10;
 
-    public FunctionsSystem() {
-        this.sin = new Sin();
+    public static FunctionsSystem getInstance() {
+        return FUNCTIONS_SYSTEM_INSTANCE;
+    }
+
+    private FunctionsSystem() {
+        this.sin = Sin.getSin();
         this.tan = new Tan();
-        this.cos = new Cos();
-        this.ln = new Ln();
-        this.log2 = new Log(2);
-        this.log3 = new Log(3);
-        this.log5 = new Log(5);
-        this.log10 = new Log(10);
+        this.cos = Cos.getCos();
+        this.ln = Ln.getInstance();
+        this.log2 =Log.getLog(2);
+        this.log3 = Log.getLog(3);
+        this.log5 = Log.getLog(5);
+        this.log10 = Log.getLog(10);
     }
 
     /**

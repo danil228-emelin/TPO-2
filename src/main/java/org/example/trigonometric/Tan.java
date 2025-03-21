@@ -19,16 +19,10 @@ import java.math.BigDecimal;
 @Slf4j
 public class Tan extends LimitedIterationsExpandableFunction {
 
-    private final Sin sin; // Instance of the sine function
-    private final Cos cos; // Instance of the cosine function
+    private final Sin sin;
+    private final Cos cos;
 
-    /**
-     * Constructs a new instance of the Tan class with specified sine
-     * and cosine function instances.
-     *
-     * @param sin An instance of the Sin class.
-     * @param cos An instance of the Cos class.
-     */
+
     public Tan(final Sin sin, final Cos cos) {
         super();
         this.sin = sin;
@@ -36,14 +30,11 @@ public class Tan extends LimitedIterationsExpandableFunction {
         log.info("Tangent function initialized with provided Sin and Cos instances.");
     }
 
-    /**
-     * Constructs a new instance of the Tan class with default
-     * sine and cosine function instances.
-     */
+
     public Tan() {
         super();
-        this.sin = new Sin();
-        this.cos = new Cos();
+        this.sin = Sin.getSin();
+        this.cos = Cos.getCos();
         log.info("Tangent function initialized with default Sin and Cos instances.");
     }
 
