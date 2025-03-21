@@ -1,0 +1,1 @@
+ALTER TABLE calculations ADD COLUMN description TEXT;
