@@ -58,7 +58,7 @@ public class App {
                 new BigDecimal("0.1"),
                 new BigDecimal("0.00000000001"));
 
-        final Log log5 =Log.getLog(5);
+        final Log log5 = Log.getLog(5);
         CsvWriter.write(
                 "csv/log5.csv",
                 log5,

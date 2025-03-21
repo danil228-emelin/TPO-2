@@ -1,16 +1,14 @@
 package org.example.trigonometric;
 
 
-import java.math.BigDecimal;
-import java.math.MathContext;
+import lombok.extern.slf4j.Slf4j;
+import org.example.function.LimitedIterationsExpandableFunction;
 
-import static java.math.BigDecimal.ONE;
+import java.math.BigDecimal;
+
 import static java.math.BigDecimal.ZERO;
 import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
-
-import lombok.extern.slf4j.Slf4j;
-import org.example.function.LimitedIterationsExpandableFunction;
 
 /**
  * This class implements the cotangent function as the ratio of
@@ -50,9 +48,9 @@ public class Cot extends LimitedIterationsExpandableFunction {
      * @param precision The precision for the calculation, must be
      *                  strictly greater than zero and less than one.
      * @return The cotangent of the input angle x, computed to
-     *         the specified precision.
+     * the specified precision.
      * @throws ArithmeticException if the provided parameters are
-     *                              invalid or if cotangent is undefined (sin(x) = 0).
+     *                             invalid or if cotangent is undefined (sin(x) = 0).
      */
     @Override
     public BigDecimal calculate(final BigDecimal x, final BigDecimal precision)

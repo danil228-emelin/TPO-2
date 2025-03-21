@@ -3,14 +3,13 @@ package org.example.logarithmic;
 import lombok.extern.slf4j.Slf4j;
 import org.example.function.LimitedIterationsExpandableFunction;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+
 import static java.lang.String.format;
 import static java.math.BigDecimal.ZERO;
 import static java.math.MathContext.DECIMAL128;
-import static java.math.RoundingMode.FLOOR;
 import static java.math.RoundingMode.HALF_EVEN;
-
-import java.math.BigDecimal;
-import java.util.HashMap;
 
 /**
  * This class represents a logarithmic function with a specified base,
@@ -21,19 +20,9 @@ import java.util.HashMap;
 @Slf4j
 public class Log extends LimitedIterationsExpandableFunction {
 
+    private final static HashMap<Integer, Log> FACTORY_LOG = new HashMap<>();
     private final Ln ln; // Instance of natural logarithm class
     private final int base; // Base of the logarithm
-    private final  static HashMap<Integer, Log> FACTORY_LOG=new HashMap<>();
-
-    public static Log getLog(Integer base) {
-        if (FACTORY_LOG.containsKey(base)){
-            return FACTORY_LOG.get(base);
-        }else{
-            Log log1 = new Log(base);
-            FACTORY_LOG.put(base, log1);
-            return log1;
-        }
-    }
 
     private Log(final int base) {
         super();
@@ -42,6 +31,15 @@ public class Log extends LimitedIterationsExpandableFunction {
         log.info("Log base {} initialized.", base);
     }
 
+    public static Log getLog(Integer base) {
+        if (FACTORY_LOG.containsKey(base)) {
+            return FACTORY_LOG.get(base);
+        } else {
+            Log log1 = new Log(base);
+            FACTORY_LOG.put(base, log1);
+            return log1;
+        }
+    }
 
     /**
      * Calculates the logarithm of a given value with a specified base.
@@ -50,7 +48,7 @@ public class Log extends LimitedIterationsExpandableFunction {
      * It first checks if the input value is valid (i.e., x > 0) and then performs the calculation.
      * </p>
      *
-     * @param x        The value for which to compute the logarithm, must be greater than zero.
+     * @param x         The value for which to compute the logarithm, must be greater than zero.
      * @param precision The precision for the calculation, must be strictly greater than zero and less than one.
      * @return The logarithm of the input value x to the specified base, computed to the specified precision.
      * @throws ArithmeticException if {@code x} is not greater than zero, or if the precision is not valid.

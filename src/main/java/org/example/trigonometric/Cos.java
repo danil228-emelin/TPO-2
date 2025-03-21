@@ -4,13 +4,13 @@ import ch.obermuhlner.math.big.BigDecimalMath;
 import lombok.extern.slf4j.Slf4j;
 import org.example.function.LimitedIterationsExpandableFunction;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ZERO;
 import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
-
-import java.math.BigDecimal;
-import java.math.MathContext;
 
 /**
  * This class implements the cosine function as an extension of
@@ -21,14 +21,9 @@ import java.math.MathContext;
 @Slf4j
 public class Cos extends LimitedIterationsExpandableFunction {
 
-    private final Sin sin; // Instance of the sine function
     private final static Cos COS_INSTANCE = new Cos();
+    private final Sin sin; // Instance of the sine function
 
-
-    public static Cos getCos(){
-        return COS_INSTANCE;
-
-    }
 
     private Cos() {
         super();
@@ -42,6 +37,11 @@ public class Cos extends LimitedIterationsExpandableFunction {
         log.info("Cosine function initialized with provided Sin instance.");
     }
 
+    public static Cos getCos() {
+        return COS_INSTANCE;
+
+    }
+
     /**
      * Calculates the cosine of a given angle in radians.
      * <p>
@@ -51,14 +51,14 @@ public class Cos extends LimitedIterationsExpandableFunction {
      * cos(x) = sin(π/2 - x).
      * </p>
      *
-     * @param x        The angle in radians for which to compute
-     *                 the cosine.
+     * @param x         The angle in radians for which to compute
+     *                  the cosine.
      * @param precision The precision for the calculation, must be
      *                  strictly greater than zero and less than one.
      * @return The cosine of the input angle x, computed to
-     *         the specified precision.
+     * the specified precision.
      * @throws ArithmeticException if the provided parameters are
-     *                              invalid.
+     *                             invalid.
      */
     @Override
     public BigDecimal calculate(final BigDecimal x, final BigDecimal precision)
@@ -84,6 +84,7 @@ public class Cos extends LimitedIterationsExpandableFunction {
         log.info("Calculated cosine of {}: {}", x, result);
         return result.setScale(precision.scale(), HALF_EVEN);
     }
+
     /**
      * Calculates the secant of a given angle in radians.
      * <p>
@@ -92,14 +93,14 @@ public class Cos extends LimitedIterationsExpandableFunction {
      * cos(x) is zero, which leads to an undefined secant (division by zero).
      * </p>
      *
-     * @param x        The angle in radians for which to compute
-     *                 the secant.
+     * @param x         The angle in radians for which to compute
+     *                  the secant.
      * @param precision The precision for the calculation, must be
      *                  strictly greater than zero and less than one.
      * @return The secant of the input angle x, computed to
-     *         the specified precision.
+     * the specified precision.
      * @throws ArithmeticException if the provided parameters are
-     *                              invalid or if secant is undefined (cos(x) = 0).
+     *                             invalid or if secant is undefined (cos(x) = 0).
      */
     public BigDecimal calculateSec(final BigDecimal x, final BigDecimal precision)
             throws ArithmeticException {

@@ -3,12 +3,12 @@ package org.example.trigonometric;
 import lombok.extern.slf4j.Slf4j;
 import org.example.function.LimitedIterationsExpandableFunction;
 
+import java.math.BigDecimal;
+
 import static java.lang.String.format;
 import static java.math.BigDecimal.ZERO;
 import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
-
-import java.math.BigDecimal;
 
 /**
  * This class implements the tangent function as an extension of
@@ -47,15 +47,15 @@ public class Tan extends LimitedIterationsExpandableFunction {
      * indicate that the tangent function is undefined at that point.
      * </p>
      *
-     * @param x        The angle in radians for which to compute
-     *                 the tangent.
+     * @param x         The angle in radians for which to compute
+     *                  the tangent.
      * @param precision The precision for the calculation, must be
      *                  strictly greater than zero and less than one.
      * @return The tangent of the input angle x, computed to
-     *         the specified precision.
+     * the specified precision.
      * @throws ArithmeticException if the cosine of the angle is zero
-     *                              (undefined tangent) or if the
-     *                              provided parameters are invalid.
+     *                             (undefined tangent) or if the
+     *                             provided parameters are invalid.
      */
     @Override
     public BigDecimal calculate(final BigDecimal x, final BigDecimal precision)

@@ -3,12 +3,12 @@ package org.example.trigonometric;
 import lombok.extern.slf4j.Slf4j;
 import org.example.function.LimitedIterationsExpandableFunction;
 
+import java.math.BigDecimal;
+
 import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ZERO;
 import static java.math.MathContext.DECIMAL128;
 import static java.math.RoundingMode.HALF_EVEN;
-
-import java.math.BigDecimal;
 
 /**
  * This class implements the sine function as an extension of
@@ -19,12 +19,40 @@ import java.math.BigDecimal;
 public class Sin extends LimitedIterationsExpandableFunction {
     private final static Sin SIN_INSTANCE = new Sin();
 
-    public static Sin getSin(){
-        return SIN_INSTANCE;
-    }
     private Sin() {
         super();
         log.info("Sine function initialized.");
+    }
+
+    public static Sin getSin() {
+        return SIN_INSTANCE;
+    }
+
+    /**
+     * Computes (-1)^n for a given integer n.
+     *
+     * @param n The exponent to compute (-1)^n.
+     * @return A BigDecimal representation of (-1)^n.
+     */
+    private static BigDecimal minusOnePow(int n) {
+        return BigDecimal.valueOf(1 - (n % 2) * 2);
+    }
+
+    /**
+     * Calculates the product of x divided by each integer from 1 to n.
+     *
+     * @param x The value to be multiplied.
+     * @param n The upper limit of the multiplication.
+     * @return The cumulative product as a BigDecimal.
+     */
+    private static BigDecimal prod(double x, int n) {
+        BigDecimal accum = BigDecimal.ONE;
+
+        for (int i = 1; i <= n; i++) {
+            accum = accum.multiply(new BigDecimal(x / i));
+        }
+
+        return accum;
     }
 
     /**
@@ -36,14 +64,14 @@ public class Sin extends LimitedIterationsExpandableFunction {
      * specified precision is reached.
      * </p>
      *
-     * @param x        The angle in radians for which to compute
-     *                 the sine.
+     * @param x         The angle in radians for which to compute
+     *                  the sine.
      * @param precision The precision for the calculation, must be
      *                  strictly greater than zero and less than one.
      * @return The sine of the input angle x, computed to
-     *         the specified precision.
+     * the specified precision.
      * @throws ArithmeticException if the provided parameters are
-     *                              invalid.
+     *                             invalid.
      */
     @Override
     public BigDecimal calculate(final BigDecimal x, final BigDecimal precision)
@@ -81,33 +109,6 @@ public class Sin extends LimitedIterationsExpandableFunction {
     }
 
     /**
-     * Computes (-1)^n for a given integer n.
-     *
-     * @param n The exponent to compute (-1)^n.
-     * @return A BigDecimal representation of (-1)^n.
-     */
-    private static BigDecimal minusOnePow(int n) {
-        return BigDecimal.valueOf(1 - (n % 2) * 2);
-    }
-
-    /**
-     * Calculates the product of x divided by each integer from 1 to n.
-     *
-     * @param x The value to be multiplied.
-     * @param n The upper limit of the multiplication.
-     * @return The cumulative product as a BigDecimal.
-     */
-    private static BigDecimal prod(double x, int n) {
-        BigDecimal accum = BigDecimal.ONE;
-
-        for (int i = 1; i <= n; i++) {
-            accum = accum.multiply(new BigDecimal(x / i));
-        }
-
-        return accum;
-    }
-
-    /**
      * Calculates the cosecant of a given angle in radians.
      * <p>
      * This method computes the sine of the input angle and then
@@ -120,9 +121,9 @@ public class Sin extends LimitedIterationsExpandableFunction {
      * @param precision The precision for the calculation, must be
      *                  strictly greater than zero and less than one.
      * @return The cosecant of the input angle x, computed to
-     *         the specified precision.
+     * the specified precision.
      * @throws ArithmeticException if the provided parameters are
-     *                              invalid or if cosecant is undefined (sin(x) = 0).
+     *                             invalid or if cosecant is undefined (sin(x) = 0).
      */
     public BigDecimal calculateCsc(final BigDecimal x, final BigDecimal precision)
             throws ArithmeticException {

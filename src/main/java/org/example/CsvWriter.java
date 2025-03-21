@@ -19,12 +19,12 @@ public class CsvWriter {
     /**
      * Writes calculated values from a series expansion function to a CSV file.
      *
-     * @param filename   The name of the file to write the output to.
-     * @param function   The function to calculate values (must implement SeriesExpandableFunction).
-     * @param from       The starting value (inclusive) for the calculations.
-     * @param to         The ending value (inclusive) for the calculations.
-     * @param step       The increment for each iteration between `from` and `to`.
-     * @param precision   The precision to use while calculating the results.
+     * @param filename  The name of the file to write the output to.
+     * @param function  The function to calculate values (must implement SeriesExpandableFunction).
+     * @param from      The starting value (inclusive) for the calculations.
+     * @param to        The ending value (inclusive) for the calculations.
+     * @param step      The increment for each iteration between `from` and `to`.
+     * @param precision The precision to use while calculating the results.
      * @throws IOException If an I/O error occurs, such as failing to create the file or write to it.
      */
     public static void write(

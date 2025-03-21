@@ -3,14 +3,13 @@ package org.example.logarithmic;
 import lombok.extern.slf4j.Slf4j;
 import org.example.function.LimitedIterationsExpandableFunction;
 
+import java.math.BigDecimal;
+
 import static java.lang.String.format;
 import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ZERO;
 import static java.math.RoundingMode.HALF_EVEN;
 import static java.math.RoundingMode.HALF_UP;
-
-import java.math.BigDecimal;
-import java.util.Objects;
 
 /**
  * This class implements the natural logarithm (ln) function using a series
@@ -22,11 +21,12 @@ import java.util.Objects;
 public class Ln extends LimitedIterationsExpandableFunction {
     private final static Ln LN_INSTANCE = new Ln();
 
-    public static Ln getInstance() {
-        return LN_INSTANCE;
-    }
     private Ln() {
         super();
+    }
+
+    public static Ln getInstance() {
+        return LN_INSTANCE;
     }
 
     /**
@@ -39,18 +39,15 @@ public class Ln extends LimitedIterationsExpandableFunction {
      * the maximum number of iterations is reached.
      * </p>
      *
-     * @param x        The value for which to compute the natural logarithm, must be greater than zero.
+     * @param x         The value for which to compute the natural logarithm, must be greater than zero.
      * @param precision The precision for the calculation, must be strictly greater than zero and less than one.
      * @return The natural logarithm of the input value x, computed to the specified precision.
      * @throws ArithmeticException if {@code x} is not greater than zero, or if the precision is not valid.
      */
     @Override
     public BigDecimal calculate(final BigDecimal x, final BigDecimal precision) throws ArithmeticException {
-        Objects.requireNonNull(x, "Function argument can not be null");
-        Objects.requireNonNull(precision, "Precision can not be null");
-        if (precision.compareTo(ZERO) <= 0 || precision.compareTo(ONE) >= 0) {
-            throw new ArithmeticException("Precision must be less than one and more than zero");
-        }
+        checkValidity(x, precision);
+
         if (x.compareTo(ZERO) <= 0) {
             log.error("Function value for argument {} doesn't exist because it is less than or equal to zero.", x);
             throw new ArithmeticException(format("Function value for argument %s doesn't exist", x));

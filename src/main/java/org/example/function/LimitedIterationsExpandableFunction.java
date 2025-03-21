@@ -1,10 +1,10 @@
 package org.example.function;
 
-import static java.math.BigDecimal.ONE;
-import static java.math.BigDecimal.ZERO;
-
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import static java.math.BigDecimal.ONE;
+import static java.math.BigDecimal.ZERO;
 
 /**
  * An abstract base class for functions that can be expanded as a series,
@@ -33,13 +33,13 @@ public abstract class LimitedIterationsExpandableFunction implements SeriesExpan
      * strictly between 0 and 1.
      * </p>
      *
-     * @param x          The input value for the function, must not be null.
-     * @param precision  The precision for the calculation, must be
-     *                   greater than zero and less than one.
+     * @param x         The input value for the function, must not be null.
+     * @param precision The precision for the calculation, must be
+     *                  greater than zero and less than one.
      * @throws NullPointerException if either <code>x</code> or
-     *                               <code>precision</code> is null.
-     * @throws ArithmeticException   if <code>precision</code> is not strictly
-     *                               between 0 and 1.
+     *                              <code>precision</code> is null.
+     * @throws ArithmeticException  if <code>precision</code> is not strictly
+     *                              between 0 and 1.
      */
     protected void checkValidity(final BigDecimal x, final BigDecimal precision) {
         Objects.requireNonNull(x, "Function argument can not be null");
